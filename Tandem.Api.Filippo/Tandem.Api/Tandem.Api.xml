@@ -21,7 +21,7 @@
             </summary>
             <returns>Returns the created user.</returns>
         </member>
-        <member name="M:Tandem.Api.Controllers.UserController.Get(System.String)">
+        <member name="M:Tandem.Api.Controllers.UserController.Get(Tandem.Domain.DTO.Users.UserQuery)">
             <summary>
             Gets user by email.
             </summary>

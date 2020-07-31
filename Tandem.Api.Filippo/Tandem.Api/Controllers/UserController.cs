@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Tandem.Domain.DTO.Users;
+using Tandem.Domain.Exceptions;
 
 namespace Tandem.Api.Controllers
 {
@@ -40,8 +43,8 @@ namespace Tandem.Api.Controllers
         /// Gets user by email.
         /// </summary>
         /// <returns>Returns the found user.</returns>
-        [HttpGet("{emailAddress}")]
-        public OutputUser Get([FromRoute] String emailAddress)
+        [HttpGet]
+        public OutputUser Get([FromQuery]UserQuery data)
         {
             var result = new OutputUser();
             return result;
@@ -52,8 +55,10 @@ namespace Tandem.Api.Controllers
         /// </summary>
         /// <returns>Returns the updated user.</returns>
         [HttpPut]
-        public OutputUser Put([FromRoute] Guid userId, [FromBody] InputUser request)
+        public OutputUser Put(Guid userId, [FromBody] InputUser request)
         {
+            throw new TandemValidationException("Invalid Data");
+
             return new OutputUser();
         }
     }
