@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tandem.Api</name>
+    </assembly>
+    <members>
+        <member name="T:Tandem.Api.Controllers.UserController">
+            <summary>
+            Manages the endpoints for User features.
+            </summary>
+        </member>
+        <member name="M:Tandem.Api.Controllers.UserController.#ctor(Microsoft.Extensions.Logging.ILogger{Tandem.Api.Controllers.UserController})">
+            <summary>
+            Creates a new instance of the <see cref="T:Tandem.Api.Controllers.UserController"/> class.
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:Tandem.Api.Controllers.UserController.Post(Tandem.Domain.DTO.Users.InputUser)">
+            <summary>
+            Creates a new user.
+            </summary>
+            <returns>Returns the created user.</returns>
+        </member>
+        <member name="M:Tandem.Api.Controllers.UserController.Get(System.String)">
+            <summary>
+            Gets user by email.
+            </summary>
+            <returns>Returns the found user.</returns>
+        </member>
+        <member name="M:Tandem.Api.Controllers.UserController.Put(System.Guid,Tandem.Domain.DTO.Users.InputUser)">
+            <summary>
+            Updates an existing user.
+            </summary>
+            <returns>Returns the updated user.</returns>
+        </member>
+        <member name="T:Tandem.Api.SwaggerExamples.InputUserExample">
+            <summary>
+            Provides example data for <see cref="T:Tandem.Domain.DTO.Users.InputUser"/> class.
+            </summary>
+        </member>
+        <member name="M:Tandem.Api.SwaggerExamples.InputUserExample.GetExamples">
+            <summary>
+            Get example data for <see cref="T:Tandem.Domain.DTO.Users.InputUser"/> class.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Tandem.Api.SwaggerExamples.OutputUserExample">
+            <summary>
+            Provides example data for <see cref="T:Tandem.Domain.DTO.Users.OutputUser"/> class.
+            </summary>
+        </member>
+        <member name="M:Tandem.Api.SwaggerExamples.OutputUserExample.GetExamples">
+            <summary>
+            Get example data for <see cref="T:Tandem.Domain.DTO.Users.OutputUser"/> class.
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
