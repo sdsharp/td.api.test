@@ -9,11 +9,12 @@
             Manages the endpoints for User features.
             </summary>
         </member>
-        <member name="M:Tandem.Api.Controllers.UserController.#ctor(Microsoft.Extensions.Logging.ILogger{Tandem.Api.Controllers.UserController})">
+        <member name="M:Tandem.Api.Controllers.UserController.#ctor(Microsoft.Extensions.Logging.ILogger{Tandem.Api.Controllers.UserController},MediatR.IMediator)">
             <summary>
             Creates a new instance of the <see cref="T:Tandem.Api.Controllers.UserController"/> class.
             </summary>
             <param name="logger"></param>
+            <param name="mediator"></param>
         </member>
         <member name="M:Tandem.Api.Controllers.UserController.Post(Tandem.Domain.DTO.Users.InputUser)">
             <summary>
