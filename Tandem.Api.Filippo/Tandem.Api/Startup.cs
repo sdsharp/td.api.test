@@ -15,6 +15,8 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.Swagger;
+using FluentValidation.AspNetCore;
+using Tandem.Api.Middleware;
 
 
 namespace Tandem.Api
@@ -31,7 +33,20 @@ namespace Tandem.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddFluentValidation(cfg =>
+                {
+                    cfg.RegisterValidatorsFromAssemblyContaining<Startup>();
+                });
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = context => 
+                {
+                    var result = new BadRequestObjectResult(context.ModelState);
+                    return result;
+                };
+            });
 
             services.AddSwaggerExamples();
             services.AddSwaggerExamplesFromAssemblyOf<Startup>();
@@ -57,6 +72,8 @@ namespace Tandem.Api
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
+
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
