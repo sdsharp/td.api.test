@@ -29,7 +29,7 @@ namespace Tandem.Business.Commands
             if (user != null
                 && user.UserId != command.UserId)
             {
-                throw new TandemValidationException($"Email address '{command.Input.EmailAddress}' associated with another user.");
+                throw new TandemValidationException($"Email address '{command.Input.EmailAddress}' is associated with another user.");
             }
 
             user = _mapper.Map<User>(command.Input);
