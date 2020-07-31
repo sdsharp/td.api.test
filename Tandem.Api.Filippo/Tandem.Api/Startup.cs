@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using FluentValidation.AspNetCore;
 using Tandem.Api.Middleware;
 using Tandem.Business.Registrations;
+using Tandem.Domain.Mappings;
 
 namespace Tandem.Api
 {
@@ -38,7 +40,6 @@ namespace Tandem.Api
                 {
                     cfg.RegisterValidatorsFromAssemblyContaining<Startup>();
                 });
-
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.InvalidModelStateResponseFactory = context => 
@@ -48,6 +49,37 @@ namespace Tandem.Api
                 };
             });
 
+            AddSwagger(services);
+
+            services.AddAutoMapper(typeof(UserMapper).Assembly);
+
+            services.AddBusiness();
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMapper mapper)
+        {
+            app.UseRouting();
+
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Tandem");
+                c.RoutePrefix = string.Empty;
+            });
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
+            await BusinessRegistration.MigrateDb(app);
+        }
+
+        private void AddSwagger(IServiceCollection services)
+        {
             services.AddSwaggerExamples();
             services.AddSwaggerExamplesFromAssemblyOf<Startup>();
 
@@ -65,28 +97,6 @@ namespace Tandem.Api
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
 
-            });
-
-            services.AddBusiness();
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseRouting();
-
-            app.UseMiddleware<ErrorHandlingMiddleware>();
-
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Tandem");
-                c.RoutePrefix = string.Empty;
-            });
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
             });
         }
     }

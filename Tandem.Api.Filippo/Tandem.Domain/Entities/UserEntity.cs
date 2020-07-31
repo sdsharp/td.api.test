@@ -2,13 +2,13 @@
 
 namespace Tandem.Domain.Entities
 {
-    public class UserEntity
+    public class UserEntity : BaseEntity
     {
-        public Guid UserId { get; set; }
         public String FirstName { get; set; }
         public String MiddleName { get; set; }
         public String LastName { get; set; }
         public String PhoneNumber { get; set; }
         public String EmailAddress { get; set; }
+        public DateTimeOffset Created { get; set; } = DateTimeOffset.UtcNow;
     }
 }
