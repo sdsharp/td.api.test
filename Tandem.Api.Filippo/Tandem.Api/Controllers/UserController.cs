@@ -4,8 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Tandem.Business.Commands;
+using Tandem.Business.Queries;
 using Tandem.Domain.DTO.Users;
 using Tandem.Domain.Exceptions;
 
@@ -19,14 +22,18 @@ namespace Tandem.Api.Controllers
     public class UserController : ControllerBase
     {
         private readonly ILogger<UserController> _logger;
+        private readonly IMediator _mediator;
 
         /// <summary>
         /// Creates a new instance of the <see cref="UserController"/> class.
         /// </summary>
         /// <param name="logger"></param>
-        public UserController(ILogger<UserController> logger)
+        /// <param name="mediator"></param>
+        public UserController(ILogger<UserController> logger,
+            IMediator mediator)
         {
             _logger = logger;
+            _mediator = mediator;
         }
 
         /// <summary>
@@ -34,9 +41,16 @@ namespace Tandem.Api.Controllers
         /// </summary>
         /// <returns>Returns the created user.</returns>
         [HttpPost]
-        public OutputUser Post([FromBody] InputUser request)
+        public async Task<OutputUser> Post([FromBody] InputUser request)
         {
-            return new OutputUser();
+            var command = new CreateUserCommand
+            {
+                Input = request
+            };
+
+            var result = await _mediator.Send(command);
+
+            return result;
         }
 
         /// <summary>
@@ -44,9 +58,15 @@ namespace Tandem.Api.Controllers
         /// </summary>
         /// <returns>Returns the found user.</returns>
         [HttpGet]
-        public OutputUser Get([FromQuery]UserQuery data)
+        public async Task<OutputUser> Get([FromQuery]UserQuery request)
         {
-            var result = new OutputUser();
+            var command = new GetUserQuery()
+            {
+                Query = request
+            };
+
+            var result = await _mediator.Send(command);
+
             return result;
         }
 
@@ -55,11 +75,17 @@ namespace Tandem.Api.Controllers
         /// </summary>
         /// <returns>Returns the updated user.</returns>
         [HttpPut]
-        public OutputUser Put(Guid userId, [FromBody] InputUser request)
+        public async Task<OutputUser> Put(Guid userId, [FromBody] InputUser request)
         {
-            throw new TandemValidationException("Invalid Data");
+            var command = new UpdateUserCommand()
+            {
+                UserId = userId,
+                Input = request
+            };
 
-            return new OutputUser();
+            var result = await _mediator.Send(command);
+
+            return result;
         }
     }
 }

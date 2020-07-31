@@ -17,7 +17,7 @@ using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.Swagger;
 using FluentValidation.AspNetCore;
 using Tandem.Api.Middleware;
-
+using Tandem.Business.Registrations;
 
 namespace Tandem.Api
 {
@@ -66,6 +66,8 @@ namespace Tandem.Api
                 c.IncludeXmlComments(xmlPath);
 
             });
+
+            services.AddBusiness();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

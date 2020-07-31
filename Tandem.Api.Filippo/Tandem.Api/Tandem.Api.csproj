@@ -10,11 +10,13 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="9.0.1" />
+    <PackageReference Include="MediatR" Version="8.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="5.1.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Tandem.Business\Tandem.Business.csproj" />
     <ProjectReference Include="..\Tandem.Domain\Tandem.Domain.csproj" />
   </ItemGroup>
 
