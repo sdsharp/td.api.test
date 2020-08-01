@@ -34,7 +34,6 @@ namespace Tandem.Business.Commands
 
             user = _mapper.Map<User>(command.Input);
             user.UserId = command.UserId;
-
             var result = await _userRepository.UpdateUser(user);
 
             return _mapper.Map<OutputUser>(result);

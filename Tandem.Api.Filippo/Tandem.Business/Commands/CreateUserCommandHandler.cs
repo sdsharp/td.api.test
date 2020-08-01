@@ -34,7 +34,6 @@ namespace Tandem.Business.Commands
             }
 
             user = _mapper.Map<User>(command.Input);
-
             var result = await _userRepository.CreateUser(user);
 
             return _mapper.Map<OutputUser>(result);
