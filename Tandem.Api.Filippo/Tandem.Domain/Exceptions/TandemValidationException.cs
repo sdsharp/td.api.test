@@ -6,7 +6,7 @@ namespace Tandem.Domain.Exceptions
 {
     public class TandemValidationException : Exception
     {
-        public TandemValidationException(String message): base(message)
+        public TandemValidationException(String message) : base(message)
         {
         }
 

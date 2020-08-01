@@ -20,7 +20,6 @@ namespace Tandem.Repository.EntityFramework.Configurations.Base
         public virtual void Configure(EntityTypeBuilder<T> builder)
         {
             builder.ToTable(GetEntityName());
-
             CustomConfigure(builder);
         }
 

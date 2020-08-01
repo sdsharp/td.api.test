@@ -19,9 +19,7 @@ namespace TandemUnitTest.Business
         public async void DuplicatedEmailAddressTest()
         {
             var emailAddress = "mary@elitechildcare.com";
-
             var command = CreateCommand();
-
             var userRepositoryMock = new Mock<IUserRepository>();
 
             userRepositoryMock
@@ -38,7 +36,6 @@ namespace TandemUnitTest.Business
             }));
 
             var handler = new CreateUserCommandHandler(userRepositoryMock.Object, mapper);
-
             var result = await Assert.ThrowsAsync<TandemValidationException>(async () => await handler.Handle(command, CancellationToken.None));
 
             Assert.Equal($"Email address '{emailAddress}' already in the system.", result.Message);
@@ -48,7 +45,6 @@ namespace TandemUnitTest.Business
         public async void HandleTest()
         {
             var command = CreateCommand();
-
             var userRepositoryMock = new Mock<IUserRepository>();
 
             userRepositoryMock
@@ -69,7 +65,6 @@ namespace TandemUnitTest.Business
             }));
 
             var handler = new CreateUserCommandHandler(userRepositoryMock.Object, mapper);
-
             await handler.Handle(command, CancellationToken.None);
 
             userRepositoryMock.VerifyAll();
@@ -89,6 +84,7 @@ namespace TandemUnitTest.Business
                 }
 
             };
+
             return command;
         }
     }

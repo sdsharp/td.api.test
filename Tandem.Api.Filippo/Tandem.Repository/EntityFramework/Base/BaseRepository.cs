@@ -46,7 +46,7 @@ namespace Tandem.Repository.EntityFramework.Base
         }
 
         /// <summary>
-        /// Saves all changes made in this context to the underlying database asynchronous.
+        /// Saves all changes made in this context to the underlying database asynchronously.
         /// </summary>
         /// <returns></returns>
         public virtual async Task SaveChangesAsync()

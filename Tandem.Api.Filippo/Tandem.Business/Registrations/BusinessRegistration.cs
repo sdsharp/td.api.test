@@ -14,7 +14,6 @@ namespace Tandem.Business.Registrations
         public static IServiceCollection AddBusiness(this IServiceCollection services)
         {
             services.AddRepository();
-
             services.AddMediatR(typeof(BusinessRegistration));
 
             return services;

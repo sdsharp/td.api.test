@@ -20,6 +20,7 @@ using FluentValidation.AspNetCore;
 using Tandem.Api.Middleware;
 using Tandem.Business.Registrations;
 using Tandem.Domain.Mappings;
+using Tandem.Repository.Registrations;
 
 namespace Tandem.Api
 {
@@ -52,6 +53,8 @@ namespace Tandem.Api
             AddSwagger(services);
 
             services.AddAutoMapper(typeof(UserMapper).Assembly);
+
+            services.AddDatabase(Configuration);
 
             services.AddBusiness();
         }
@@ -96,7 +99,6 @@ namespace Tandem.Api
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
-
             });
         }
     }

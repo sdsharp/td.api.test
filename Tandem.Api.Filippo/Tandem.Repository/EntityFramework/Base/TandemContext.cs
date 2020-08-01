@@ -10,24 +10,11 @@ namespace Tandem.Repository.EntityFramework.Base
 {
     public class TandemContext : DbContext, IContext
     {
-        private readonly IConfiguration _configuration;
-
         public TandemContext()
         {
         }
 
-        public TandemContext(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            var connectionString = _configuration.GetConnectionString("TandemDatabase")
-                                   ?? "Data Source=(local);Initial Catalog=BayManager;Integrated Security=SSPI;"; // to support Update-Database
-
-            optionsBuilder.UseSqlServer(connectionString);
-        }
+        public TandemContext(DbContextOptions options) : base(options) { }
 
         public Task<int> SaveChangesAsync()
         {

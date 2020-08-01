@@ -41,11 +41,10 @@ namespace Tandem.Repository.EntityFramework
             };
 
             Add(entity);
-
             await SaveChangesAsync();
 
             user.UserId = entity.Id;
-
+            
             return user;
         }
 
